@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> prefix(n), suffix(n), result(n);
+
+        // prefix[i] = product of everything to the LEFT of i
+        prefix[0] = 1;
+        for (int i = 1; i < n; i++)
+            prefix[i] = prefix[i-1] * nums[i-1];
+
+        // suffix[i] = product of everything to the RIGHT of i
+        suffix[n-1] = 1;
+        for (int i = n-2; i >= 0; i--)
+            suffix[i] = suffix[i+1] * nums[i+1];
+
+        // answer = left product * right product
+        for (int i = 0; i < n; i++)
+            result[i] = prefix[i] * suffix[i];
+
+        return result;
+    }
+};
